@@ -44,5 +44,21 @@ let arr2 = [3,4];
 [...arr1, ...arr2];
 
 let list = [1,2,3,4,5,6];
+//	扩展运算的参数只能放最后一位
 const [aa,bb, ...rest] = list;
 
+let str = [...'hello'];
+
+let func1 = function(){};
+
+console.log(func1.name);
+
+let g = b => b;
+
+let h = () => 5;
+
+let i = (a,b) => a + b;
+
+let j = (a,b) => ({a: a, b: b});
+
+let k = ({a,b}) => a + ' ' + b;

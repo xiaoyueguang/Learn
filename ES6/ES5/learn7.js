@@ -2,6 +2,8 @@
 
 var _console;
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function test() {
 	var x = arguments.length <= 0 || arguments[0] === undefined ? 'Hello' : arguments[0];
 	var y = arguments.length <= 1 || arguments[1] === undefined ? 'World!' : arguments[1];
@@ -74,6 +76,36 @@ var arr2 = [3, 4];
 [].concat(arr1, arr2);
 
 var list = [1, 2, 3, 4, 5, 6];
+//	扩展运算的参数只能放最后一位
 var aa = list[0];
 var bb = list[1];
 var rest = list.slice(2);
+
+
+var str = [].concat(_toConsumableArray('hello'));
+
+var func1 = function func1() {};
+
+console.log(func1.name);
+
+var g = function g(b) {
+	return b;
+};
+
+var h = function h() {
+	return 5;
+};
+
+var i = function i(a, b) {
+	return a + b;
+};
+
+var j = function j(a, b) {
+	return { a: a, b: b };
+};
+
+var k = function k(_ref) {
+	var a = _ref.a;
+	var b = _ref.b;
+	return a + ' ' + b;
+};
