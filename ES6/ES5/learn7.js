@@ -1,5 +1,7 @@
 'use strict';
 
+var _console;
+
 function test() {
 	var x = arguments.length <= 0 || arguments[0] === undefined ? 'Hello' : arguments[0];
 	var y = arguments.length <= 1 || arguments[1] === undefined ? 'World!' : arguments[1];
@@ -52,3 +54,26 @@ function foo() {
 function foo1() {
 	var optional = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
 }
+
+function add() {
+	for (var _len = arguments.length, values = Array(_len), _key = 0; _key < _len; _key++) {
+		values[_key] = arguments[_key];
+	}
+
+	console.log(values);
+}
+
+(_console = console).log.apply(_console, [1, 2, 3]);
+
+Math.max(1, 2, 4, 3);
+Math.max.apply(null, [1, 2, 4, 3]);
+Math.max.apply(Math, [1, 2, 4, 3]);
+
+var arr1 = [1, 2];
+var arr2 = [3, 4];
+[].concat(arr1, arr2);
+
+var list = [1, 2, 3, 4, 5, 6];
+var aa = list[0];
+var bb = list[1];
+var rest = list.slice(2);
