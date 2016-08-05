@@ -6,6 +6,10 @@ gulp.task('babel', function(){
     .pipe(babel({
       presets: ['es2015']
     }))
+    .on('error', function(err){
+      console.log('报错了:',err);
+      this.end();
+    })
     .pipe(gulp.dest('./es5'));
 });
 
