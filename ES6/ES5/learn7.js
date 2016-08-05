@@ -109,3 +109,21 @@ var k = function k(_ref) {
 	var b = _ref.b;
 	return a + ' ' + b;
 };
+
+function foo() {
+	var _this = this;
+
+	return function () {
+		return function () {
+			return function () {
+				console.log('id:', _this.id);
+			};
+		};
+	};
+}
+
+var fooo = foo.call({ id: 1 });
+
+var t1 = fooo.call({ id: 2 })()();
+var t2 = fooo().call({ id: 3 })();
+var t3 = fooo()().call({ id: 4 });
