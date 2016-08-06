@@ -72,3 +72,65 @@
     };
     let setValue = (options) => Object.assign({}, DEFAULTS, options);
 }
+{
+    const a = {
+        a: 1,
+        b: 2,
+    };
+    const b = {
+        c: 3,
+        d: 4,
+    }
+
+    a[Symbol('s')] = 'test';
+    b[Symbol('ss')] = 'test';
+    a.__proto__ = b;
+
+    for (let key in a) {
+        console.log(key);
+    }
+
+    console.log(Object.keys(a));
+    console.log(Object.getOwnPropertyNames(a));
+    console.log(Object.getOwnPropertySymbolskeys(a));
+    console.log(Reflect.ownKeys(a));
+}
+{
+    const a = {
+        a: 1,
+        b: 2
+    };
+    const b = {
+        c: 1,
+        d: 2
+    };
+    Object.setPrototypeOf(a, b);
+
+    let pro = Object.getPrototypeOf(a);
+    console.log(pro);
+}
+{
+    var obj = {
+        a: 1,
+        b: 2
+    };
+    Object.keys(obj);
+    Object.values(obj);
+    Object.entries(obj);
+}
+{
+    let {x, y, ...z} = {x:1, y: 2, a: 3, b: 4};
+}
+{
+    let obj = {a:1, b:2};
+    let n = {...obj};
+}
+{
+    const obj = {
+        foo: 123,
+        get bar(){
+            return 456;
+        }
+    }
+    Object.getOwnPropertyDescriptors(obj);
+}
