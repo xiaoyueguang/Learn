@@ -37,3 +37,24 @@
 	console.log(s.values())		//=> SetIterator { 1, 2, 3 }
 	console.log(s.entries())	//=> SetIterator { [ 1, 1 ], [ 2, 2 ], [ 3, 3 ] }
 }
+{
+    const m = new Map([['name', 'lin'], ['age', 18]])
+    const o = 'sex'
+    m.set(o, 'boy')
+    m.get(o)    //=> boy
+    m.get('name')   //=> lin
+    m.get('age')    //=> 18
+}
+{
+    const m = new Map()
+    const o = {a: 1}
+    const q = {a: 1}
+    m.set(o, 111)
+    m.set(q, 222)
+    m.get(o)    //=> 111
+    m.get(q)    //=> 222
+    m.set([], 333)
+    m.size  //=> 3
+    m.set([], 444)
+    m.size  //=> 4
+}
