@@ -11,7 +11,7 @@
     s.size //=> 5
 }
 {
-    function dedup (arr) {
+    function dedupe (arr) {
         return [... new Set(arr)]
     }
 
@@ -30,4 +30,10 @@
     s.add(undefined)   //=> Set(NaN, [], [], {}, {}, undefined)
     s.add(null)   //=> Set(NaN, [], [], {}, {}, undefined, null)
     s.add(null)   //=> Set(NaN, [], [], {}, {}, undefined, null)
+}
+{
+	const s = new Set([1, 2, 3])
+	console.log(s.keys())		//=> SetIterator { 1, 2, 3 }
+	console.log(s.values())		//=> SetIterator { 1, 2, 3 }
+	console.log(s.entries())	//=> SetIterator { [ 1, 1 ], [ 2, 2 ], [ 3, 3 ] }
 }
