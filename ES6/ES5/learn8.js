@@ -57,11 +57,11 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
     var c = { c: 3 };
     var d = { d: 4 };
 
-    Object.assign(a, b, c, d);
+    _extends(a, b, c, d);
 }
 {
     var _a = {};
-    Object.assign(_a, { x: 1 });
+    _extends(_a, { x: 1 });
     console.log(_a);
 }
 {
@@ -71,11 +71,11 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
             console.log(1);
         }
     };
-    Object.assign(_a2, _b);
+    _extends(_a2, _b);
 }
 {
     var clone = function clone(origin) {
-        return Object.assign({}, origin);
+        return _extends({}, origin);
     };
 }
 {
@@ -103,7 +103,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
             length: 0
         };
         var setValue = function setValue(options) {
-            return Object.assign({}, DEFAULTS, options);
+            return _extends({}, DEFAULTS, options);
         };
     })();
 }
