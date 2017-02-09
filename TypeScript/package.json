@@ -16,5 +16,10 @@
     "typescript": "^2.1.4",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "@types/jquery": "^2.0.34",
+    "@types/lodash": "^4.14.43",
+    "@types/vue": "^1.0.31"
   }
 }
