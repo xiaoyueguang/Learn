@@ -50,3 +50,94 @@ promise.then(function(value){
 	console.log('值为0');
 });
 ```
+
+利用 `Promise`能很好的解决回调问题. 
+```
+// 传统的方式:
+function sleepByES3 (time, success) {
+  setTimeout(() => {
+    typeof success === 'function' && success()
+  }, time * 1000)
+}
+
+sleepByES3(1, function () {
+  console.log(1)
+  sleepByES3(2, function () {
+    console.log(2)
+    sleepByES3(3, function () {
+      console.log(3)
+    })
+  })
+})
+
+// Promise:
+function sleep (time) {
+	// 返回一个 Promise
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, time * 1000)
+  })
+}
+
+function run () {
+  sleep(1).then(() => {
+    console.log(1)
+    return sleep(2)
+  }).then(() => {
+    console.log(2)
+    return sleep(3)
+  }).then(() => {
+    console.log(3)
+  })
+}
+
+run()
+
+/**
+ * 利用 async, 同步写法
+ */
+async function asyncRun () {
+  await sleep(1)
+  console.log(1)
+  await sleep(2)
+  console.log(2)
+  await sleep(3)
+  console.log(3)
+}
+
+asyncRun()
+
+```
+
+当然, `Promise`也不仅仅是这些功能. 比如:
+1. `Promise.all` 等全部回调完成后 触发.
+2. `Promise.race` 只要其中一个完成了, 就马上触发
+
+```
+function sleep (time) {
+	// 返回一个 Promise
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(time)
+      console.log(time)
+    }, time * 1000)
+  })
+}
+// 输出1, 2, 3之后, 打印出 全部完成
+Promise.all([
+  sleep(1),
+  sleep(2),
+  sleep(3)
+]).then(() => {
+  console.log('全部完成')
+})
+// 输出 1后,马上输出 完成一个
+Promise.race([
+  sleep(1),
+  sleep(2),
+  sleep(3)
+]).then(() => {
+  console.log('完成一个')
+})
+```
