@@ -1,21 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Learn1 from './Ruan/Learn-1'
+import Learn2 from './Ruan/Learn-2'
+import Learn3 from './Ruan/Learn-3'
+import Learn4 from './Ruan/Learn-4'
+import Learn5 from './Ruan/Learn-5'
+import Learn6 from './Ruan/Learn-6'
+import Learn7 from './Ruan/Learn-7'
+const isOfficial = true
 
-class App extends Component {
-  render() {
+// 阮一峰的教程
+class Ruan extends Component {
+  render () {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h4>Learn1</h4>
+        <Learn1 />
+        <h4>Learn2</h4>
+        <Learn2 />
+        <h4>Learn3</h4>
+        <Learn3 />
+        <h4>Learn4</h4>
+        <Learn4 />
+        <h4>Learn5</h4>
+        <Learn5 />
+        <h4>Learn6</h4>
+        <Learn6 />
+        <h4>Learn7</h4>
+        <Learn7 />
       </div>
-    );
+    )
   }
 }
+// 官方教程
+class Official extends Component {
+  render () {
+    return (
+      <div>
+        HEHE
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+  render () {
+    if (!isOfficial) {
+      return (<Ruan />)
+    } else {
+      return (<Official />)
+    }
+  }
+}
+
 
 export default App;
