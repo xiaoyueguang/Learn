@@ -31,12 +31,22 @@ class Ruan extends Component {
     )
   }
 }
+import JSX from './Official/JSX.jsx'
+function officalRender (title, Component) {
+  return (
+    <div>
+      <h4>{title}</h4>
+      <Component />
+    </div>
+  )
+}
+
 // 官方教程
 class Official extends Component {
   render () {
     return (
       <div>
-        HEHE
+        {officalRender('JSX', JSX)}
       </div>
     )
   }

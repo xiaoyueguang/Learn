@@ -8,5 +8,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
-React.Children.map(val => console.log(val))
