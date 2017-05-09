@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './App.css'
+
 import Learn1 from './Ruan/Learn-1'
 import Learn2 from './Ruan/Learn-2'
 import Learn3 from './Ruan/Learn-3'
@@ -31,22 +33,31 @@ class Ruan extends Component {
     )
   }
 }
-import JSX from './Official/JSX.jsx'
 function officalRender (title, Component) {
   return (
     <div>
-      <h4>{title}</h4>
+      <h3>{title}</h3>
       <Component />
     </div>
   )
 }
 
+import JSX from './Official/JSX.jsx'
+import Components from './Official/Components.jsx'
+import State from './Official/State-Lifecycle.jsx'
+import Handling from './Official/Handling-Events.jsx'
+import Conditional from './Official/Conditional-Rendering.jsx'
+
 // 官方教程
 class Official extends Component {
   render () {
     return (
-      <div>
+      <div className="flex">
         {officalRender('JSX', JSX)}
+        {officalRender('Components', Components)}
+        {officalRender('State And Lifecycle', State)}
+        {officalRender('Handling Events', Handling)}
+        {officalRender('Conditional Rendering', Conditional)}
       </div>
     )
   }
