@@ -46,6 +46,16 @@ class App extends Component {
             checked={Number(this.state.select) === num}
           />
         )}
+        {[1, 2, 3].map(num =>
+          <input
+            type="checkbox"
+            onChange={this.change}
+            name="select"
+            key={num}
+            value={num}
+            checked={Number(this.state.select) === num}
+          />
+        )}
       </div>
     )
   }
