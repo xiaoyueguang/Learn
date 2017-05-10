@@ -47,7 +47,8 @@ import Components from './Official/Components.jsx'
 import State from './Official/State-Lifecycle.jsx'
 import Handling from './Official/Handling-Events.jsx'
 import Conditional from './Official/Conditional-Rendering.jsx'
-
+import List from './Official/Lists-Keys.jsx'
+import Forms from './Official/Forms.jsx'
 // 官方教程
 class Official extends Component {
   render () {
@@ -58,6 +59,9 @@ class Official extends Component {
         {officalRender('State And Lifecycle', State)}
         {officalRender('Handling Events', Handling)}
         {officalRender('Conditional Rendering', Conditional)}
+        {officalRender('Lists and Keys', List)}
+        {officalRender('Forms', Forms)}
+
       </div>
     )
   }
