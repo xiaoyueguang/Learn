@@ -49,19 +49,26 @@ import Handling from './Official/Handling-Events.jsx'
 import Conditional from './Official/Conditional-Rendering.jsx'
 import List from './Official/Lists-Keys.jsx'
 import Forms from './Official/Forms.jsx'
+
+import Depth from './Official/JSX-In-Depth.jsx'
+
 // 官方教程
 class Official extends Component {
   render () {
     return (
-      <div className="flex">
-        {officalRender('JSX', JSX)}
-        {officalRender('Components', Components)}
-        {officalRender('State And Lifecycle', State)}
-        {officalRender('Handling Events', Handling)}
-        {officalRender('Conditional Rendering', Conditional)}
-        {officalRender('Lists and Keys', List)}
-        {officalRender('Forms', Forms)}
-
+      <div>
+        <div className="flex">
+          {officalRender('JSX', JSX)}
+          {officalRender('Components', Components)}
+          {officalRender('State And Lifecycle', State)}
+          {officalRender('Handling Events', Handling)}
+          {officalRender('Conditional Rendering', Conditional)}
+          {officalRender('Lists and Keys', List)}
+          {officalRender('Forms', Forms)}
+        </div>
+        <div className="flex">
+          {officalRender('JSX-In-Depth', Depth)}
+        </div>
       </div>
     )
   }
