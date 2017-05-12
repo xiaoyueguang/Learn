@@ -51,6 +51,10 @@ import List from './Official/Lists-Keys.jsx'
 import Forms from './Official/Forms.jsx'
 
 import Depth from './Official/JSX-In-Depth.jsx'
+import PropTypes from './Official/Props-Type.jsx'
+import Refs from './Official/Refs.jsx'
+import Performance from './Official/Optimizing-Performance.jsx'
+
 
 // 官方教程
 class Official extends Component {
@@ -68,6 +72,10 @@ class Official extends Component {
         </div>
         <div className="flex">
           {officalRender('JSX-In-Depth', Depth)}
+          {officalRender('Typechecking With PropTypes', PropTypes)}
+          {officalRender('Refs and the DOM', Refs)}
+          {officalRender('Optimizing Performance', Performance)}
+
         </div>
       </div>
     )
