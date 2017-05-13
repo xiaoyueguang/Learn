@@ -11,7 +11,7 @@ import Learn7 from './Ruan/Learn-7'
 const isOfficial = true
 
 // 阮一峰的教程
-class Ruan extends Component {
+export class Ruan extends Component {
   render () {
     return (
       <div>
@@ -57,7 +57,7 @@ import Performance from './Official/Optimizing-Performance.jsx'
 
 
 // 官方教程
-class Official extends Component {
+export class Official extends Component {
   render () {
     return (
       <div>
