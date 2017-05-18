@@ -1,37 +1,31 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect
-} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 
-/* you'll need this CSS somewhere
-.fade-enter {
-  opacity: 0;
-  z-index: 1;
-}
+const styles = {}
 
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 250ms ease-in;
-}
-*/
+const HSL = ({ match: { params } }) => (
+  <div style={{
+    ...styles.fill,
+    ...styles.hsl,
+    background: `${params.color}`
+  }}>color: {params.color}</div>
+)
 
+// :color 为 模糊匹配. 参数
 const AnimationExample = () => (
   <Router>
     <Route render={({ location }) => (
       <div style={styles.fill}>
-        <Route exact path="/" render={() => (
-          <Redirect to="/10/90/50"/>
+        <Route exact path="/Router/" render={() => (
+          <Redirect to="/Router/black"/>
         )}/>
 
         <ul style={styles.nav}>
-          <NavLink to="/Router/10/90/50">Red</NavLink>
-          <NavLink to="/Router/120/100/40">Green</NavLink>
-          <NavLink to="/Router/200/100/40">Blue</NavLink>
-          <NavLink to="/Router/310/100/50">Pink</NavLink>
+          <NavLink to="/Router/red">Red</NavLink>
+          <NavLink to="/Router/green">Green</NavLink>
+          <NavLink to="/Router/blue">Blue</NavLink>
+          <NavLink to="/Router/pink">Pink</NavLink>
         </ul>
 
         <div style={styles.content}>
@@ -40,16 +34,10 @@ const AnimationExample = () => (
             transitionEnterTimeout={300}
             transitionLeaveTimeout={300}
           >
-            {/* no different than other usage of
-                ReactCSSTransitionGroup, just make
-                sure to pass `location` to `Route`
-                so it can match the old location
-                as it animates out
-            */}
             <Route
               location={location}
               key={location.key}
-              path="/Router/:h/:s/:l"
+              path="/Router/:color"
               component={HSL}
             />
           </ReactCSSTransitionGroup>
@@ -65,18 +53,8 @@ const NavLink = (props) => (
   </li>
 )
 
-const HSL = ({ match: { params } }) => (
-  <div style={{
-    ...styles.fill,
-    ...styles.hsl,
-    background: `hsl(${params.h}, ${params.s}%, ${params.l}%)`
-  }}>hsl({params.h}, {params.s}%, {params.l}%)</div>
-)
-
-const styles = {}
 
 styles.fill = {
-  position: 'absolute',
   left: 0,
   right: 0,
   top: 0,
@@ -92,8 +70,6 @@ styles.content = {
 styles.nav = {
   padding: 0,
   margin: 0,
-  position: 'absolute',
-  top: 0,
   height: '40px',
   width: '100%',
   display: 'flex'
