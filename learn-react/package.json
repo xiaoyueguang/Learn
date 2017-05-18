@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "clean-css": "^4.1.2",
+    "flux": "^3.1.2",
     "react-addons-css-transition-group": "^15.5.2",
     "react-scripts": "0.9.5",
     "uglify-js": "^3.0.7"

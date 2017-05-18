@@ -8,7 +8,6 @@ import Learn4 from './Ruan/Learn-4'
 import Learn5 from './Ruan/Learn-5'
 import Learn6 from './Ruan/Learn-6'
 import Learn7 from './Ruan/Learn-7'
-const isOfficial = true
 
 // 阮一峰的教程
 export class Ruan extends Component {
@@ -82,15 +81,17 @@ export class Official extends Component {
   }
 }
 
-class App extends Component {
+import FluxIndex from './Flux/Index.jsx'
+
+export class FluxComponent extends Component {
   render () {
-    if (!isOfficial) {
-      return (<Ruan />)
-    } else {
-      return (<Official />)
-    }
+    return (
+      <div>
+        <div className="flex">
+          {officalRender('Flux', FluxIndex)}
+        </div>
+      </div>
+    )
   }
 }
 
-
-export default App;

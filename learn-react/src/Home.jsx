@@ -14,6 +14,7 @@ class App extends Component {
         <li><Link to="/Ruan">阮一峰的教程</Link></li>
         <li><Link to="/Official">官方教程</Link></li>
         <li><Link to="/Router">路由</Link></li>
+        <li><Link to="/Flux">Flux</Link></li>
       </div>
     )
   }
