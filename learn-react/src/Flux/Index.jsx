@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {AppDispatcher, countStore} from './flux.js'
+import store, {defaultState} from './redux.js'
 
 class FluxComponent extends Component {
   constructor () {
@@ -40,11 +41,42 @@ class FluxComponent extends Component {
   }
 }
 
+let state = defaultState
 class ReduxComponent extends Component {
+  constructor () {
+    super()
+    this.click1 = this.click1.bind(this)
+    this.click2 = this.click2.bind(this)
+  }
+
+  click (index) {
+    store.dispatch({
+      type: 'ADD' + index
+    })
+  }
+
+  click1 () {
+    this.click(1)
+  }
+
+  click2 () {
+    this.click(2)
+  }
+
+  componentDidMount () {
+    store.subscribe(() => {
+      this.forceUpdate()
+      state = store.getState()
+    })
+  }
+
   render () {
     return (
       <div>
-        111
+        <span>{state.count1 + state.count2}</span>
+        <br/>
+        <button onClick={this.click}>{state.count1}</button>
+        <button onClick={this.click}>{state.count2}</button>
       </div>
     )
   }
