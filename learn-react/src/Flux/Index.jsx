@@ -56,17 +56,28 @@ class ReduxComponent extends Component {
   }
 
   click1 () {
-    this.click(1)
+    store.dispatch({
+      type: 'ADD1'
+    })
   }
 
   click2 () {
-    this.click(2)
+    // store.dispatch({
+    //   type: 'ADD' + index
+    // })
+    store.dispatch({
+      type: 'PLUS'
+    })
+    // state = store.getState()
+    // this.forceUpdate()
+    
   }
 
   componentDidMount () {
     store.subscribe(() => {
-      this.forceUpdate()
+      // 实时更新
       state = store.getState()
+      this.forceUpdate()
     })
   }
 
