@@ -93,14 +93,86 @@ class ReduxComponent extends Component {
   }
 }
 
+/**
+ * React-Redux
+ * React-Redux 将 组件分为两种.
+ * 一种为 UI组件(纯组件, 即接受参数返回 jsx)
+ * 一种为 容器组件.负责管理数据以及业务逻辑.带有自己的内部状态, 使用Redux的API.
+ * 这种好处显而易见, 将数据与界面解耦.
+ * 容器组件拿任意UI组件都能使用.
+ * UI组件也能在任意地方进行渲染.
+ */
+
+import {connect, Provider} from 'react-redux'
+import {createStore} from 'redux'
+
+// Reducer
+function counter(state = { count: 0 }, action) {
+  const count = state.count
+  switch (action.type) {
+    case 'increase':
+      return { count: count + 1 }
+    default:
+      return state
+  }
+}
+// 创建一个 store
+const store1 = createStore(counter)
+
+/**
+ * UI组件
+ */
+class Counter extends Component {
+  render () {
+    // React-Redux 默认会把值 方法, 通过props 传过来
+    const {value, onIncreaseClick} = this.props
+    return (
+      <div>
+        <button onClick={onIncreaseClick}>{value}</button>
+      </div>
+    )
+  }
+}
+
+/**
+ * 容器组件.
+ */
+// 将 Redux中的值, 取出来放到对应的props中
+function mapStateToProps(state) {
+  return {
+    value: state.count
+  }
+}
+// 将 Redux中的方法, 取出来放到对应的props中
+function mapDispatchToProps(dispatch) {
+  return {
+    onIncreaseClick: () => dispatch({type: 'increase'})
+  }
+}
+// React-Redux 将 UI组件与容器组件连接. 生成容器组件
+const App1 = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter)
+
+/**
+ * 接着通过 Provider根组件, 传入 store, 会自动将值赋值到里面的子组件
+ */
+
+
 class App extends Component {
   render () {
+
     return (
       <div>
         <h1>Flux</h1>
         <FluxComponent />
         <h1>Redux</h1>
         <ReduxComponent />
+        <h2>React-Redux</h2>
+        <Provider store={store1}>
+          <App1 />
+        </Provider>
       </div>
     )
   }
