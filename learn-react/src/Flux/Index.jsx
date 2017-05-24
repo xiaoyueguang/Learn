@@ -160,7 +160,6 @@ const App1 = connect(
  */
 
 import Mobxx from './Mobx.jsx'
-console.log(Mobxx)
 
 class App extends Component {
   render () {
@@ -176,6 +175,7 @@ class App extends Component {
           <App1 />
         </Provider>
         <h1>Mobx</h1>
+        <Mobxx></Mobxx>
       </div>
     )
   }
