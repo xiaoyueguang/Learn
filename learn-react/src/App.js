@@ -94,4 +94,3 @@ export class FluxComponent extends Component {
     )
   }
 }
-

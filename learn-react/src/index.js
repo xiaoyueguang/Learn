@@ -18,6 +18,7 @@ const RouterID = ({match}) => (
     <h3>ID: {match.params.id}</h3>
   </div>
 )
+import TODO from './TODO/React/App.jsx'
 
 ReactDOM.render(
   <Router history={Router}>
@@ -28,6 +29,7 @@ ReactDOM.render(
       <Route path="/Ruan" component={Ruan} />
       <Route path="/Router" component={RouterComponent} />
       <Route path="/Flux" component={FluxComponent} />
+      <Route path="/TODO" component={TODO} />
       <Route path="/:id" component={RouterID} />
     </div>
   </Router>,
