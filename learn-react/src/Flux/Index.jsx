@@ -159,8 +159,6 @@ const App1 = connect(
  * 接着通过 Provider根组件, 传入 store, 会自动将值赋值到里面的子组件
  */
 
-import Mobxx from './Mobx.jsx'
-
 class App extends Component {
   render () {
 
@@ -174,8 +172,6 @@ class App extends Component {
         <Provider store={store1}>
           <App1 />
         </Provider>
-        <h1>Mobx</h1>
-        <Mobxx></Mobxx>
       </div>
     )
   }
