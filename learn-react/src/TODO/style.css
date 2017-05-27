@@ -29,10 +29,15 @@ h3 {
   padding: 12px 0;
 }
 
+
 .text {
   text-align: left;
   float: left;
   width: 248px;
+}
+
+.list.done .text {
+  text-decoration: line-through;
 }
 
 .btn {
@@ -47,4 +52,26 @@ h3 {
 
 .btn.success {
   border-color: green;
+}
+
+.filter {
+  padding: 12px 0;
+}
+
+.filter div {
+  display: inline-block;
+  width: 48px;
+  height: 32px;
+  line-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid green;
+  border-radius: 8px;
+  margin: 0 12px;
+  cursor: pointer;
+  transition: all .4s ease;
+}
+
+.filter .active {
+  background: green;
+  color: #fff;
 }
