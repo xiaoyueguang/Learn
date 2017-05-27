@@ -4,8 +4,8 @@
     <input
       class="input"
       type="text"
-      v-model = 'input'
-      @keydown.enter = 'add'
+      v-model='input'
+      @keydown.enter='add'
     />
     <div class="filter">
       <div :class="{active: filters === ''}" @click="setFilters('')">全部</div>
