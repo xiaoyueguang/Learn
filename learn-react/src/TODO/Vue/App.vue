@@ -13,11 +13,7 @@
       <div :class="{active: filters === 'undone'}" @click="setFilters('undone')">未完成</div>
     </div>
     <div class="lists">
-      <div
-        class="list"
-        :class="{done: item.done}"
-        v-for='(item, index) in items'
-      >
+      <div class="list" :class="{done: item.done}" v-for='(item, index) in items'>
         <div class="text">{{item.text}}</div>
         <div class="btn success" @click="done(item.id)">完成</div>
         <div class="btn" @click="del(item.id)">删除</div>
@@ -25,7 +21,6 @@
     </div>
   </div>
 </template>
-
 <script>
   export default {
     data () {
@@ -87,9 +82,6 @@
         return index
       }
     }
-
   }
 </script>
-
 <style src="../style.css"></style>
-

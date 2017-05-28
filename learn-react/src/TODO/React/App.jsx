@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../style.css'
-
 class App extends Component {
   constructor () {
     super()
@@ -9,6 +8,7 @@ class App extends Component {
       oriItems: [],
       // 过滤字符
       filters: '',
+      // ID
       id: 0
     }
   }
@@ -79,18 +79,9 @@ class App extends Component {
           onKeyDown={this.add}
         />
         <div className="filter">
-          <div
-            className={this.state.filters === '' ? 'active' : ''}
-            onClick={this.setFilters.bind(this, '')}
-          >全部</div>
-          <div
-            className={this.state.filters === 'done' ? 'active' : ''}
-            onClick={this.change.bind(this, 'done')}
-          >已完成</div>
-          <div
-            className={this.state.filters === 'undone' ? 'active' : ''}
-            onClick={this.change.bind(this, 'undone')}
-          >未完成</div>
+          <div className={this.state.filters === '' ? 'active' : ''} onClick={this.setFilters.bind(this, '')}>全部</div>
+          <div className={this.state.filters === 'done' ? 'active' : ''} onClick={this.setFilters.bind(this, 'done')}>已完成</div>
+          <div className={this.state.filters === 'undone' ? 'active' : ''} onClick={this.setFilters.bind(this, 'undone')}>未完成</div>
         </div>
         <div className="lists">
           {this.items().map(({id, done, text}) => (
@@ -105,5 +96,4 @@ class App extends Component {
     )
   }
 }
-
 export default App
