@@ -75,7 +75,6 @@
         this.oriItems.forEach(({id}, ind) => {
           if (id === id_argu) index = ind
         })
-        console.log(index)
         return index
       }
     }
