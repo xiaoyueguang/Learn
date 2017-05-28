@@ -5,15 +5,14 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
+      // 原生数组
       oriItems: [],
+      // 过滤字符
       filters: '',
-      msg: 'TODO',
       id: 0
     }
-    this.add = this.add.bind(this)
-    window.a = this
   }
-  
+  // 没有计算属性, 只能把 items 当方法来调用了
   items = () => {
     if (this.state.filters === '') {
       return this.state.oriItems
@@ -21,8 +20,14 @@ class App extends Component {
       return this.state.oriItems.filter(({done}) => done === (this.state.filters === 'done'))
     }
   }
-
-  add (e) {
+  // 设置过滤
+  setFilters = filters => {
+    this.setState({
+      filters
+    })
+  }
+  // 添加 没有双向绑定因此需要自己手动获取值. 没有修饰符, 得手动判断输入的键
+  add = e => {
     if (e.keyCode === 13) {
       const oriItems = this.state.oriItems
       oriItems.push({
@@ -37,16 +42,7 @@ class App extends Component {
       })
     }
   }
-
-  del = id => {
-    let oriItems = [...this.state.oriItems]
-    let index = this.getIndex(id)
-    oriItems.splice(index, 1)
-    this.setState({
-      oriItems
-    })
-  }
-
+  // 完成
   done = id => {
     let oriItems = [...this.state.oriItems]
     let index = this.getIndex(id)
@@ -55,7 +51,16 @@ class App extends Component {
       oriItems
     })
   }
-
+  // 删除
+  del = id => {
+    let oriItems = [...this.state.oriItems]
+    let index = this.getIndex(id)
+    oriItems.splice(index, 1)
+    this.setState({
+      oriItems
+    })
+  }
+  // 获得序号
   getIndex = id_argu => {
     let index = -1
     this.state.oriItems.forEach(({id}, ind) => {
@@ -64,16 +69,10 @@ class App extends Component {
     return index
   }
 
-  change = filters => {
-    this.setState({
-      filters
-    })
-  }
-
   render () {
     return (
       <div className="wrap">
-        <h1>{this.state.msg}</h1>
+        <h1>TODO</h1>
         <input
           className="input"
           type="text"
@@ -82,7 +81,7 @@ class App extends Component {
         <div className="filter">
           <div
             className={this.state.filters === '' ? 'active' : ''}
-            onClick={this.change.bind(this, '')}
+            onClick={this.setFilters.bind(this, '')}
           >全部</div>
           <div
             className={this.state.filters === 'done' ? 'active' : ''}

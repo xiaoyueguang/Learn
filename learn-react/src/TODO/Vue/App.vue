@@ -30,9 +30,13 @@
   export default {
     data () {
       return {
+        // 用以双向绑定
         input: '',
+        // 原生数组
         oriItems: [],
+        // 过滤字符
         filters: '',
+        // ID
         id: 0
       }
     },
@@ -49,9 +53,11 @@
       }
     },
     methods: {
+      // 设置过滤
       setFilters (type) {
         this.filters = type
       },
+      // 添加
       add () {
         if (this.input === '') return false
         this.oriItems.push({
@@ -61,15 +67,18 @@
         })
         this.input = ''
       },
+      // 完成
       done (id) {
         let index = this.getIndex(id)
         this.oriItems[index].done = !this.oriItems[index].done
       },
+      // 删除
       del (id) {
         let index = this.getIndex(id)
         this.oriItems.splice(index, 1)
         console.log(this.oriItems)
       },
+      // 获得序号
       getIndex (id_argu) {
         let index = -1
         this.oriItems.forEach(({id}, ind) => {
