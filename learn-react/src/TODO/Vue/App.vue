@@ -8,21 +8,33 @@
       @keydown.enter='add'
     />
     <div class="filter">
-      <div :class="{active: filters === ''}" @click="setFilters('')">全部</div>
-      <div :class="{active: filters === 'done'}" @click="setFilters('done')">已完成</div>
-      <div :class="{active: filters === 'undone'}" @click="setFilters('undone')">未完成</div>
+      <filter-btn
+        v-for = '(field, index) in fields'
+        :key = 'index'
+        :text = 'field.text'
+        :field = 'field.field'
+        :filters = 'filters'
+        @click.native = 'setFilters(field.field)'
+      ></filter-btn>
     </div>
     <div class="lists">
-      <div class="list" :class="{done: item.done}" v-for='(item, index) in items'>
-        <div class="text">{{item.text}}</div>
-        <div class="btn success" @click="done(item.id)">完成</div>
-        <div class="btn" @click="del(item.id)">删除</div>
-      </div>
+      <list
+        v-for = '(item, index) in items'
+        :key = 'index'
+        :item = 'item'
+        @done = 'done'
+        @del = 'del'
+      ></list>
     </div>
   </div>
 </template>
 <script>
+  import List from './list.vue'
+  import FilterBtn from './filter.vue'
   export default {
+    components: {
+      List, FilterBtn
+    },
     data () {
       return {
         // 用以双向绑定
@@ -32,7 +44,12 @@
         // 过滤字符
         filters: '',
         // ID
-        id: 0
+        id: 0,
+        fields: [
+          {field: '', text: '全部'},
+          {field: 'done', text: '已完成'},
+          {field: 'undone', text: '未完成'}
+        ]
       }
     },
     computed: {
@@ -71,7 +88,6 @@
       del (id) {
         let index = this.getIndex(id)
         this.oriItems.splice(index, 1)
-        console.log(this.oriItems)
       },
       // 获得序号
       getIndex (id_argu) {

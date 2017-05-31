@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import '../style.css'
+import List from './list.jsx'
+import FilterBtn from './filter'
+
 class App extends Component {
   constructor () {
     super()
@@ -9,7 +12,12 @@ class App extends Component {
       // 过滤字符
       filters: '',
       // ID
-      id: 0
+      id: 0,
+      fields: [
+        {field: '', text: '全部'},
+        {field: 'done', text: '已完成'},
+        {field: 'undone', text: '未完成'}
+      ]
     }
   }
   // 没有计算属性, 只能把 items 当方法来调用了
@@ -79,17 +87,29 @@ class App extends Component {
           onKeyDown={this.add}
         />
         <div className="filter">
-          <div className={this.state.filters === '' ? 'active' : ''} onClick={this.setFilters.bind(this, '')}>全部</div>
-          <div className={this.state.filters === 'done' ? 'active' : ''} onClick={this.setFilters.bind(this, 'done')}>已完成</div>
-          <div className={this.state.filters === 'undone' ? 'active' : ''} onClick={this.setFilters.bind(this, 'undone')}>未完成</div>
+          {this.state.fields.map(({field, text}, index) => (
+            <FilterBtn
+              active={field === this.state.filters}
+              field={field}
+              text={text}
+              key={index}
+              app={this}
+              set={this.setFilters}
+            >
+            </FilterBtn>
+          ))}
         </div>
         <div className="lists">
           {this.items().map(({id, done, text}) => (
-            <div className={done ? 'list done' : 'list'} key={id}>
-              <div className="text">{text}</div>
-              <div className="btn success" onClick={this.done.bind(this, id)}>完成</div>
-              <div className="btn" onClick={this.del.bind(this, id)}>删除</div>
-            </div>
+            <List
+              done={done}
+              text={text}
+              del={this.del}
+              doneFn={this.done}
+              id={id}
+              key={id}
+              app={this}
+            ></List>
           ))}
         </div>
       </div>
