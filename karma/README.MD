@@ -20,9 +20,10 @@ karma init
 ```
 karma start
 ```
-即可运行  
-> 看到以下代码表示运行成功.
+> 看到以下代码表示运行成功.  
+
 ![](images/success.png)
-> 失败
+
+> 失败  
 ![](images/fail.png)
 
