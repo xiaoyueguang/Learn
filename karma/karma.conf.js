@@ -11,7 +11,7 @@ module.exports = function(config) {
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     // JS测试框架
-    frameworks: ['jasmine'],
+    frameworks: ['mocha'],
 
 
     // list of files / patterns to load in the browser
@@ -79,6 +79,13 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity,
     // webpack 直接引用打包时的webpack配置即可
-    webpack: require('./webpack.config.js')
+    webpack: require('./webpack.config.js'),
+    // 设置mocha 最大异步事件
+    client: {
+      mocha: {
+        timeout : 10000
+      }
+    }
+
   })
 }

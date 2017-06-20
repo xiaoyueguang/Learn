@@ -27,3 +27,4 @@ karma start
 > 失败  
 ![](images/fail.png)
 
+<!--https://segmentfault.com/a/1190000006895064-->
