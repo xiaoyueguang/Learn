@@ -4,33 +4,33 @@ import {expect} from 'chai'
 let time1 = 0.5
 let time2 = 0.6
 
-describe('异步测试: ', () => {
-  it('通过回调', done => {
+describe('异步测试: ', function () {
+  it('通过回调', function (done) {
     let x = true;
 
-    sleep(() => {
+    sleep(function () {
       x = false;
     }, time1)
     // 抹茶的time时间需要在karma.conf.js里设置
-    setTimeout(() => {
+    setTimeout(function () {
       expect(x).to.be.equal(false);
       done()
     }, time2 * 1000)
   })
 
-  it('通过Promise', done => {
+  it('通过Promise', function (done) {
     let x = true;
-    sleepPromise(time1).then(() => {
+    sleepPromise(time1).then(function () {
       x = false
     })
 
-    setTimeout(() => {
+    setTimeout(function () {
       expect(x).to.be.equal(false);
       done()
     }, time2 * 1000)
   })
 
-  it('async/await', done => {
+  it('async/await', function (done) {
     let x = true;
 
     async function exec () {
@@ -39,7 +39,7 @@ describe('异步测试: ', () => {
     }
     exec()
 
-    setTimeout(() => {
+    setTimeout(function () {
       expect(x).to.be.equal(false);
       done()
     }, time2 * 1000)
