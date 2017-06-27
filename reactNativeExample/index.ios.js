@@ -13,19 +13,34 @@ import {
   View,
   Button,
   Image,
-  TextInput
+  TextInput,
+  Modal
 } from 'react-native';
 
-export default class reactNativeExample extends Component {
+export default class ReactNativeExample extends Component {
   constructor () {
     super()
     this.onGet = this.onGet.bind(this)
+    this.onClick = this.onClick.bind(this)
+    this.onClose = this.onClose.bind(this)
     this.state = {
       rules: [],
-      text: '陈林'
+      text: '',
+      show: false
     }
   }
 
+  onClick () {
+    this.setState({
+      show: true
+    })
+  }
+
+  onClose () {
+    this.setState({
+      show: false
+    })
+  }
 
   onGet () {
     fetch('https://active.wsloan.com/json/active_may/rule.json')
@@ -41,6 +56,17 @@ export default class reactNativeExample extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Modal
+          visible={this.state.show}
+        >
+          <Text
+            style={{fontSize: 48, textAlign: 'center', marginTop: 48}}
+          >薛哈媚最漂亮</Text>
+          <Button
+            onPress={this.onClose}
+            title="关闭"
+          />
+        </Modal>
         <TextInput
           style={{width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
           onChangeText={text => this.setState({text})}
@@ -48,6 +74,10 @@ export default class reactNativeExample extends Component {
         <Text style={styles.welcome}>
           Hello React Native {this.state.text}
         </Text>
+        <Button
+          onPress={this.onClick}
+          title="墨镜墨镜 谁最漂亮"
+        />
         <Button
           onPress={this.onGet}
           title="获取数据"
@@ -90,4 +120,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('reactNativeExample', () => reactNativeExample);
+AppRegistry.registerComponent('ReactNativeExample', () => ReactNativeExample);
