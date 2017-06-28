@@ -61,7 +61,7 @@ export default class ReactNativeExample extends Component {
         >
           <Text
             style={{fontSize: 48, textAlign: 'center', marginTop: 48}}
-          >薛哈媚最漂亮</Text>
+          >关闭弹窗</Text>
           <Button
             onPress={this.onClose}
             title="关闭"
@@ -76,7 +76,7 @@ export default class ReactNativeExample extends Component {
         </Text>
         <Button
           onPress={this.onClick}
-          title="墨镜墨镜 谁最漂亮"
+          title="弹窗测试"
         />
         <Button
           onPress={this.onGet}
