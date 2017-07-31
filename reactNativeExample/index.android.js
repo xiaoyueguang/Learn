@@ -68,7 +68,7 @@ export default class ReactNativeExample extends Component {
           />
         </Modal>
         <TextInput
-          style={{width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
+          style={{width: 300, height: 66, borderColor: 'gray', borderWidth: 1}}
           onChangeText={text => this.setState({text})}
         />
         <Text style={styles.welcome}>
@@ -78,6 +78,7 @@ export default class ReactNativeExample extends Component {
           onPress={this.onClick}
           title="弹窗测试"
         />
+
         <Button
           onPress={this.onGet}
           title="获取数据"
