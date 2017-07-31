@@ -33,3 +33,49 @@ protractor.conf.js e2e 配置文件
 tsconfig.json typescript 配置文件
 tslint.json typescript lint 配置文件
 ```
+
+## `Angular`主要构造块
+### 模块`module`
+模块系统, 又名`Angular`模块
+模块有
+* 根模块
+* 特性模块
+> 每个应用至少都会有一个根模块
+`NgModules`是一个装饰器.用来接受描述模块的对象, 有以下属性:
+* `declarations` 本模块使用的视图类
+* `exports` TODO:
+* `imports` 模块所需要依赖的其它模块
+* `providers` 服务
+* `bootstrap` 主视图, 即根组件(只有根组件能设置该属性)
+```
+// app.module.ts
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+@NgModule({
+  imports:      [ BrowserModule ],
+  providers:    [ Logger ],
+  declarations: [ AppComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+// main.ts
+// 启动
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+> `Angular`模块 和 `Javascript`模块 并不是同一个东西
+当需要从其它模块里引用它的 `Angular`数据时, 则需要在 `imports: []`添加该库
+***
+
+### 组件`component`
+
+
+### 模板`template`
+### 元数据`metadata`
+### 数据绑定`data binding`
+### 指令`directive`
+### 服务`service`
+### 依赖注入`dependency injection`
