@@ -71,9 +71,21 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 ***
 
 ### 组件`component`
-
+组件, 负责控制屏幕上的一块区域.包含完整的 css, html 和 js 逻辑.  
+每个组件都带有自己的生命周期.
+* constructor 实例化
+* ngOnChanges 组件里的值改变时触发 首次调用一定在 onInit 前
+* ngOnInit 组件创建完成后触发. 只触发一次
+* ngDoCheck 在每个变更检测中调用
+*   ngAfterContentInit 内容进入组件后出发, 只调用一次 只适合组件
+*   ngAfterContentChecked 内容变更之后调用 只适合组件
+*   ngAfterViewInit 初始化组件视图和子视图后调用. 只调用一次 只适合组件
+*   ngAfterViewChecked 每次组件视图和子视图变更后调用. 只适合组件
+* ngOnDestroy 摧毁组件前触发. 可反订阅可观察对象.移除事件处理器. 防止内存泄露
 
 ### 模板`template`
+
+
 ### 元数据`metadata`
 ### 数据绑定`data binding`
 ### 指令`directive`
