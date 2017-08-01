@@ -34,7 +34,7 @@ tsconfig.json typescript 配置文件
 tslint.json typescript lint 配置文件
 ```
 
-## `Angular`主要构造块
+## `Angular`主要构造块, 整体架构
 ### 模块`module`
 模块系统, 又名`Angular`模块
 模块有
@@ -84,10 +84,30 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 * ngOnDestroy 摧毁组件前触发. 可反订阅可观察对象.移除事件处理器. 防止内存泄露
 
 ### 模板`template`
-
+`Angular`的模板跟标准的 `HTML`类似, 比它多了些自己的模板语法, 比如`*ngFor`, `{{value}}`, `(click)`, `[value]=fff`, `<custom-component></custom-component>`
 
 ### 元数据`metadata`
+元数据是一个纯正的`javascript`类, 通过装饰器给组件附加元数据  
+`@Component`装饰器属性
+* `selector` CSS选择器, 将组件插入到该 css 选择器中
+* `templateUrl` 模板地址
+* `providers` 依赖注入数组
+
 ### 数据绑定`data binding`
+数据绑定, 将模板上的数据, 事件与`javascript`中的变量, 方法绑定起来.  
+减少手动绑定方法以及更新界面, 从而实现 `mvvm`
+
 ### 指令`directive`
+指令会对 `DOM` 进行转换, 附加一些操作. 有三种:
+* 带模板的指令: 即组件(对整个模板进行添加绑定, 添加事件)
+* 结构型指令(列表循环或条件渲染等)
+* 属性型指令(绑定事件, 更新属性等)
+
 ### 服务`service`
+服务是一个广义范畴, 包括 值, 函数, 或应用所需的特性  
+专注于完成某个事件.  
+比如维护用户信息等
+
 ### 依赖注入`dependency injection`
+依赖注入, 是为类添加新的依赖. 大部分依赖为 服务.
+`Angular`创建组件时, 会请求生成一个注入器. 该注入器会维护一个服务实例的容器. 等服务全部解析完毕时, `Angular`会将这些服务作为参数, 去调用组件的构造函数. 从而实现依赖注入
