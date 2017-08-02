@@ -111,3 +111,42 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 ### 依赖注入`dependency injection`
 依赖注入, 是为类添加新的依赖. 大部分依赖为 服务.
 `Angular`创建组件时, 会请求生成一个注入器. 该注入器会维护一个服务实例的容器. 等服务全部解析完毕时, `Angular`会将这些服务作为参数, 去调用组件的构造函数. 从而实现依赖注入
+
+
+## `Angular`根模块
+利用 `NgModule` 接受一个元数据对象, 来装饰类, 使之成为根模块.
+元数据对象有以下属性:
+* `imports` 数组 (`Angular`导入的模块通过这里导入)
+* `declarations` 数组 (每一个组件都需要通过这里来声明.)
+* `bootstrap` 数组 (将该数组的组件渲染到 DOM 中)
+
+## 显示数据
+* 可通过`{{value}}`标签来显示数据
+* 通过`*ngFor`来显示数组属性
+* 通过`*ngIf`进行条件显示
+
+模板可通过两种方式:
+1. 内联模板. 定义 `template` 属性, 通过 \`\` 来定义模板.
+2. 独立的 html 文件, 定义`templateUrl`属性, 使用相对路径引用模板
+
+## 用户输入
+1. 绑定用户输入事件 在 dom 上通过`(click)="onClick()"`绑定
+2. 通过`$event`对象取得用户输入. 大部分事件可取得`$event`对象
+3. 从模板引用变量取得用户输入. 可通过在绑定的模板上加入一个引用变量. `#box`. 可通过 `box.value`取得值, 需要注意的事, 必须要绑定一个方法, 哪怕是一个空方法. `(keyup)="0"`
+4. 按键事件过滤(通过`key.enter`) 事件绑定可使用过滤器.
+5. 失去焦点事件(blur) 失去焦点的时候触发该回调`(blur)="update()"`
+
+## 表单
+使用 `ngModel` 进行双向数据绑定
+在`form`表单上添加 `#heroForm` 来保证引用.
+绑定了`ngModel`元素, 还能自动跟踪修改状态与有效性验证. 并且使用特定的`Angular CSS`来更新控件
+|状态|为真时css|为假时css|
+|:--|:--|:--|
+|控件被访问过。|ng-touched|ng-untouched|
+|控件的值变化了。|ng-dirty|ng-pristine|
+|控件的值有效。|ng-valid|ng-invalid|
+
+使用`ngSubmit`提交表单.
+
+## 依赖注入
+`Angular`的依赖注入系统能够即时的创建和交付所依赖的服务
