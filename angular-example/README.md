@@ -150,3 +150,47 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ## 依赖注入
 `Angular`的依赖注入系统能够即时的创建和交付所依赖的服务
+### 首先说 为什么要依赖注入
+不同的组件, 共享相同的一部分实例. 可实现一套接口, 完成对该接口的调用. 而注入的依赖也同时实现了这套接口, 从而实现一个组件切换依赖时能完成不同的功能, 一个依赖 也能被多个组件调用.
+### `Angular`依赖注入
+在根模块`NgModule`或组件中注册提供商  
+在服务中调用 `@Injectable()`装饰器.  
+
+## 模板语法
+* `{{...}}` 插值表达式
+* 模板表达式. 可在 `{{}}`调用一些基础的 JS 运算符.
+* `(event)="statement"` 数据绑定
+* 绑定语法
+  1. 单向 数据源 -> 视图目标  插值表达式,类,样式,Property,Attribute {{}},[],bind-target
+  2. 单向 视图目标 -> 数据源  事件 (),on-target
+  3. 双向  双向 [(target)],bindon-target
+* 绑定目标
+  |绑定类型|ng 写法|vue 中类似的写法|
+  |:--|:--|:--|
+  |Property|[src]="src"|:src='src'|
+  |事件|(click)="onClick()"|@click="onClick"|
+  |双向|[(ngModel)]="name"|v-model="name"|
+  |Attribute|[attr.aria-label]="help"||
+  |CSS类|[class.isShow]="isShow"|:class="{isShow:isShow}"|
+  |样式|[style.color]="isRed ? 'red' : 'white'"|:style="{color: isRed ? 'red' : 'white'}"|
+* 内置属性型指令
+  `Angular`添加了一些内置的指令, 来方便开发.
+  * `NgClass` 添加或删除 css 类 `[NgClass]='classObject'`
+  * `NgStyle` 添加或删除样式 `[NgStyle]=styleObject`
+  * `NgModel` 双向绑定 `[(ngModel)]="value"`
+* 内置结构性指令
+  `Angular`添加了一些调整 HTML 布局的指令.
+  * `NgIf` 根据条件移除或添加 dom `*ngIf="isActive"`
+  * `NgFor` 列表渲染 `*ngFor="let list of lists;let i=index;trackBy: trackByLists"`
+  * `NgSwitch` 切换视图. 类似 switch
+    ```
+      [ngSwitch]="list.type"
+        *ngSwitchCash="'1'"
+        *ngSwitchCash="'2'"
+        *ngSwitchDefault
+    ```
+* 模板引用变量(#var) 类似 vue 的 ref 语法
+* 模板表达式操作符.
+  * 管道操作符(|) 类似过滤器
+  * 安全导航操作符 ( ?. ) 对象下的某个值可能不存在时, 加 ?. 可保护视图渲染器免于失败
+  * 空属性路径 插值的值为 undefined 时候会默认显示空格.
