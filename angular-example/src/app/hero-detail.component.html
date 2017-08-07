@@ -1,0 +1,13 @@
+<div *ngIf="hero">
+  <h2>{{hero.name}} Details!</h2>
+  <div>
+    <label>id: </label>{{hero.id}}
+  </div>
+  <div>
+    <label>name: </label>
+    <!--双向绑定. 需要在 app.module 中引用 FormsModule  -->
+    <input [(ngModel)]="hero.name">
+  </div>
+</div>
+
+<button (click)="goBack()">Back</button>

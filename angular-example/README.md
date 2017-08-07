@@ -194,3 +194,5 @@ platformBrowserDynamic().bootstrapModule(AppModule);
   * 管道操作符(|) 类似过滤器
   * 安全导航操作符 ( ?. ) 对象下的某个值可能不存在时, 加 ?. 可保护视图渲染器免于失败
   * 空属性路径 插值的值为 undefined 时候会默认显示空格.
+
+> 教程看的差不多了. 照着官方的例子(英雄指南)敲一遍吧
