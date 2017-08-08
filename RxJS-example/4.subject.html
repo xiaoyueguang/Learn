@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Observable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  </body>
+  <script src="./rx.js"></script>
+  <script>
+    ;(() => {
+      const subject = new Rx.Subject()
+      // 每个Subject都是Observable. 可订阅
+      subject.subscribe({
+        next: x => console.log(`1: ${x}`)
+      })
+      // 可接受一个回调方法
+      subject.subscribe(x => console.log(`2: ${x}`))
+      // 每个Subject都是Observable, 可 next
+      subject.next(1)
+      subject.next(2)
+
+      // 每个Subject都是观察者
+      const observable = Rx.Observable.from([1, 2, 3]);
+      observable
+        .delay(1000)
+        // 将值传给该 subject 观察者, 而 subject 又会多播给多个观察者
+        .subscribe(subject)
+    })()
+
+    ;(() => {
+      const source = Rx.Observable.from([1, 2, 3])
+      const subject = new Rx.Subject()
+      const multicasted = source.multicast(subject)
+      // 在底层使用了 subject.subscribe({...})
+      multicasted.subscribe({
+        next: x => console.log(`observerA: ${x}`)
+      })
+
+      multicasted.subscribe({
+        next: x => console.log(`observerB: ${x}`)
+      })
+      // 在底层使用了 source.subscribe(subject)
+      multicasted.connect();
+
+    })()
+
+    ;setTimeout(() => {
+      const consoleTime = () => console.log('%c' + new Date, 'color: red')
+      const source = Rx.Observable.interval(800);
+      const subject = new Rx.Subject();
+      // 引用计数
+      const refCounted = source.multicast(subject).refCount();
+      let subscription1, subscription2, subscriptionConnect;
+
+      //refCounted 有了订阅者的时候, 会自动执行 connect
+      console.log('refCount: observerA subscribed');
+      consoleTime()
+      subscription1 = refCounted.subscribe({
+        next: (v) => {
+          console.log('refCount: observerA: ' + v)
+          consoleTime()
+        }
+      });
+
+      setTimeout(() => {
+        console.log('refCount: observerB subscribed');
+        consoleTime()
+        subscription2 = refCounted.subscribe({
+          next: (v) => {
+            console.log('refCount: observerB: ' + v)
+            consoleTime()
+          }
+        });
+      }, 1000);
+
+      setTimeout(() => {
+        console.log('refCount: observerA unsubscribed');
+        consoleTime()
+        subscription1.unsubscribe();
+      }, 1900);
+
+      // 这里共享的 Observable 执行会停止，
+      // 因为此后 `refCounted` 将不再有订阅者
+      setTimeout(() => {
+        console.log('refCount: observerB unsubscribed');
+        consoleTime()
+        // 当 refCount 的订阅者为空时, 自动停止执行
+        subscription2.unsubscribe();
+      }, 2800);
+
+    }, 3000)
+
+    ;(() => {
+      const subject = new Rx.BehaviorSubject(0);
+      subject.subscribe({
+        next: (v) => console.log('observerA: ' + v)
+      });
+      subject.next(1);
+      subject.next(2);
+      subject.subscribe({
+        next: (v) => console.log('observerB: ' + v)
+      });
+      subject.next(3);
+      // 输出:
+      // observerA: 0  初始值为0. 第一次订阅时拿到的值为0
+      // observerA: 1
+      // observerA: 2
+      // observerB: 2  当前值为2. 第二次订阅值拿到的值为2
+      // observerA: 3
+      // observerB: 3
+
+    })()
+
+    ;(() => {
+      // 缓冲三个值
+      const subject = new Rx.ReplaySubject(3);
+
+      subject.subscribe({
+        next: (v) => console.log('observerA: ' + v)
+      });
+
+      subject.next(1);
+      subject.next(2);
+      subject.next(3);
+      subject.next(4);
+
+      subject.subscribe({
+        next: (v) => console.log('observerB: ' + v)
+      });
+
+      subject.next(5);
+      // 输出
+      // observerA: 1
+      // observerA: 2
+      // observerA: 3
+      // observerA: 4
+      // observerB: 2 ***********
+      // observerB: 3 新的订阅者订阅, 返回三个值
+      // observerB: 4 ***********
+      // observerA: 5
+      // observerB: 5
+    })()
+
+    ;(() => {
+      const subject = new Rx.AsyncSubject();
+
+      subject.subscribe({
+        next: (v) => console.log('observerA: ' + v)
+      });
+
+      subject.next(1);
+      subject.next(2);
+      subject.next(3);
+      subject.next(4);
+
+      subject.subscribe({
+        next: (v) => console.log('observerB: ' + v)
+      });
+
+      subject.next(5);
+      subject.subscribe({
+        next: (v) => console.log('observerC: ' + v)
+      });
+      subject.complete();
+
+      // 输出
+      // 完成时, 将最后个值传递过去
+      // observerA: 5
+      // observerB: 5
+      // observerC: 5
+    })()
+  </script>
+</html>

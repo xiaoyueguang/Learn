@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Observable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  </body>
+  <script src="./rx.js"></script>
+  <script>
+    // `Observables`
+    const observable = Rx.Observable.create(observer => {
+      // 同步返回值
+      observer.next(1);
+      observer.next(2);
+      observer.next(3);
+      setTimeout(() => {
+        // 异步返回值
+        observer.next(4);
+        observer.complete();
+      }, 1000);
+    });
+    // 订阅. 观察者
+    // 惰性. 如果不进行订阅, 则什么都不会执行
+    // observable.subscribe({
+    //   next: x => console.log(`next: ${x}`),
+    //   error: err => console.log(`报错: ${err}`),
+    //   complete: () => console.log('完成')
+    // })
+
+    observable.subscribe(x => console.log('next'))
+    console.log('start')
+
+  </script>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Observable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  </body>
+  <script src="./rx.js"></script>
+  <script>
+    const observable = Rx.Observable.interval(1000)
+    const subscription = observable.subscribe(x => console.log('1: ' + x))
+    const otherSubscription = observable.subscribe(x => {
+      console.log('2: ' + x)
+      // 将两个 Subscription 合在一起
+      if (x === 1) subscription.add(otherSubscription)
+    })
+    const thirdSubscription = observable.subscribe(x => {
+      console.log('3: ' + x)
+      if (x === 1) {
+        subscription.add(thirdSubscription)
+        // 撤销
+        subscription.remove(thirdSubscription)
+      }
+    })
+    setTimeout(() => {
+      subscription.unsubscribe();
+    }, 2400)
+  </script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <button id="button1">点击</button>
+    <button id="button2">count</button>
+    <button id="button3">count</button>
+    <button id="button4">count</button>
+  </body>
+  <script src="./rx.js"></script>
+  <script>
+    const $ = id => document.getElementById(id)
+    // Hello World
+    Rx.Observable.fromEvent($('button1'), 'click')
+      .subscribe(() => {
+        console.log('Hello World!')
+      })
+    
+    // 纯净性. 将应用状态隔离起来.
+    // 不会修改到外面的count. 同时外部也不好影响到里面的 count
+    Rx.Observable.fromEvent($('button2'), 'click')
+      .scan(count => count + 1, 0)
+      .subscribe(count => {
+        $('button2').innerHTML = `count${count}`
+        console.log(`${count}`)
+      })
+    
+    // 流动性
+    // 这里会将 点击事件给节流了, 过1秒后, 才允许执行到下一个状态
+    Rx.Observable.fromEvent($('button3'), 'click')
+      // 节流 1秒
+      .throttleTime(1000)
+      .scan(count => count + 1, 0)
+      .subscribe(count => {
+        $('button3').innerHTML = `count${count}`
+        console.log(`${count}`)
+      })
+
+      // 值
+      Rx.Observable.fromEvent($('button4'), 'click')
+        .throttleTime(1000)
+        .map(event => event.clientX)
+        .scan((count, clientX) => count + clientX, 0)
+        .subscribe(count => {
+          console.log(count)
+        })
+  </script>
+</html>

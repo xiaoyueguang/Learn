@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Observable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  </body>
+  <script src="./rx.js"></script>
+  <script>
+    ;(() => {
+      // input 传入的 Observable
+      function multiplyByTen (input) {
+        const output = Rx.Observable.create(function subscribe (observer) {
+          // 在原本的 Observable 上设置观察者
+          input.subscribe({
+            // 在新的 Observable 执行触发
+            next: x => observer.next(x * 10)
+          })
+        })
+        // 返回新的 Observable
+        return output
+      }
+
+      const input = Rx.Observable.from([1, 2, 3, 4])
+      // 自定义操作符
+      multiplyByTen(input).subscribe(x => console.log(x))
+    })()
+  </script>
+</html>
