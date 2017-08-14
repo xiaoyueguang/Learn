@@ -162,4 +162,52 @@ multiplyByTen(input)
 ![image](./marble.png)  
 （图片来自：[RxJS中文文档](http://cn.rx.js.org/manual/overview.html))
 
-#### 选择操作符
+#### 操作符分类
+* 创建
+* 转换
+* 过滤
+* 组合
+* 错误处理
+* 工具
+
+点击[链接](http://cn.rx.js.org/manual/overview.html#h213)查看
+
+--
+## `Scheduler`(调度器)
+调度器控制何时启动`subscription`和何时发送通知
+* 一种数据结构. 根据优先级或其它标准来存储任务和将任务排序
+* 执行上下文. 表示在何时何地执行任务
+* 虚拟时钟. 调度器通过它的`getter`方法获取时间
+
+调度器可让你规定`Observable`在什么样的执行上下文中发送通知给它的观察者
+
+```
+const observable = Rx.Observable.create(function (observer) {
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  observer.complete();
+})
+  // 操作符. 指定调度器
+  .observeOn(Rx.Scheduler.async)
+
+console.log('just before subscribe')
+observable.subscribe({
+  next: x => console.log('got value ' + x),
+  error: err => console.error('something wrong occurred: ' + err),
+  complete: () => console.log('done'),
+})
+console.log('just after subscribe');
+```
+
+### 调度器类型
+|调度器|目的|
+|:--|:--|
+|null|同步递归发送通知, 用于定时操作或尾递归|
+|Rx.Scheduler.queue|队列调度, 用于迭代操作|
+|Rx.Scheduler.asap|微任务的任务调度, 用于异步转换|
+|Rx.Scheduler.async|使用 setInterval 的调度, 基于时间的操作符|
+### 使用调度器
+使用`subscribeOn`来调度`subscribe()`调用在什么样的上下文中执行
+
+
