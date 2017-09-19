@@ -1,0 +1,14 @@
+{
+  "name": "whistle-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "w2 start"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "whistle": "^1.5.14"
+  }
+}
