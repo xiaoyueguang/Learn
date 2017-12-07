@@ -13,7 +13,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
         bar: function bar(str) {
             console.log('Hello' + str);
         },
-        m: regeneratorRuntime.mark(function m() {
+        m: /*#__PURE__*/regeneratorRuntime.mark(function m() {
             return regeneratorRuntime.wrap(function m$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -97,15 +97,13 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
     };
 }
 {
-    (function () {
-        var DEFAULTS = {
-            count: 0,
-            length: 0
-        };
-        var setValue = function setValue(options) {
-            return _extends({}, DEFAULTS, options);
-        };
-    })();
+    var DEFAULTS = {
+        count: 0,
+        length: 0
+    };
+    var setValue = function setValue(options) {
+        return _extends({}, DEFAULTS, options);
+    };
 }
 {
     var _a3 = {
@@ -154,11 +152,10 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
     Object.entries(obj);
 }
 {
-    var _x$y$a$b = { x: 1, y: 2, a: 3, b: 4 };
-    var x = _x$y$a$b.x;
-    var y = _x$y$a$b.y;
-
-    var z = _objectWithoutProperties(_x$y$a$b, ['x', 'y']);
+    var _x$y$a$b = { x: 1, y: 2, a: 3, b: 4 },
+        x = _x$y$a$b.x,
+        y = _x$y$a$b.y,
+        z = _objectWithoutProperties(_x$y$a$b, ['x', 'y']);
 }
 {
     var _obj3 = { a: 1, b: 2 };

@@ -82,10 +82,9 @@ var _iteratorError3 = undefined;
 
 try {
 	for (var _iterator3 = ['a', 'b'].entries()[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-		var _step3$value = _slicedToArray(_step3.value, 2);
-
-		var _index = _step3$value[0];
-		var _elem = _step3$value[1];
+		var _step3$value = _slicedToArray(_step3.value, 2),
+		    _index = _step3$value[0],
+		    _elem = _step3$value[1];
 
 		console.log(_index, _elem);
 	}

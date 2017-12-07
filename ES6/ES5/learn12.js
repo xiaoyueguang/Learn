@@ -3,14 +3,12 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 {
-    (function () {
-        var s = new Set()[(1, 2, 3, 4, 4, 5, 3, 2)].map(function (data) {
-            return s.add(data);
-        });
+    var s = new Set()[(1, 2, 3, 4, 4, 5, 3, 2)].map(function (data) {
+        return s.add(data);
+    });
 
-        console.log(s); //=> Set{1, 2, 3, 4, 5}
-        s.size; //=> 5
-    })();
+    console.log(s); //=> Set{1, 2, 3, 4, 5}
+    s.size; //=> 5
 }
 {
     var _s = new Set([1, 2, 3, 4, 5, 4, 3, 2]);

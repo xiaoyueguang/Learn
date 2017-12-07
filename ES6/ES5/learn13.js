@@ -1,20 +1,20 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 {
     var arr = [1, 2, 3];
-    var _x = arr[0];
-    var y = arr[1];
+    var _x = arr[0],
+        y = arr[1];
 }
 {
     var _arr = [1, 2, 3];
-    var _x2 = _arr[0];
 
-    var rest = _arr.slice(1);
+    var _x2 = _arr[0],
+        rest = _arr.slice(1);
 }
 {
-    var generator = regeneratorRuntime.mark(function generator() {
+    var generator = /*#__PURE__*/regeneratorRuntime.mark(function generator() {
         return regeneratorRuntime.wrap(function generator$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
