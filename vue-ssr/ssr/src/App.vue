@@ -1,17 +1,19 @@
-<template>
-  <div id="app">
-    <img @click="alert" src="./assets/logo.png">
-    <HelloWorld/>
-  </div>
+<template lang="pug">
+  #app
+    img(
+      @click="alert",
+      src = './assets/logo.png'
+    )
+    div router-view start
+    router-view
+    div router-view end
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
   },
   methods: {
     alert () {

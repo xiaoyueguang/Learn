@@ -7,12 +7,15 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js",
+    "build": "npm run server:build && npm run client:build",
     "server:build": "webpack --config build/webpack.server.conf.js",
     "client:build": "webpack --config build/webpack.client.conf.js"
   },
   "dependencies": {
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
     "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
