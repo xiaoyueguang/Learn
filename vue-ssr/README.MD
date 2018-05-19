@@ -68,3 +68,120 @@
 
   server.listen(8080)
 ```
+
+## 结构
+按照官方的文档, 要做好`SSR`, 需要完成以下步奏
+![img](https://cloud.githubusercontent.com/assets/499550/17607895/786a415a-5fee-11e6-9c11-45a2cfdf085c.png)
+一个通用的`app.js`, 负责引用之前编写的所有文件, 比如路由, 组件, 状态, 资源等等.  
+而后需要两个入口文件, 分别代表服务端, 和客户端. 通过`webpack`编译后, 生成对应的两个`bundle`文件.  
+服务端引用对应的`Server`, 生成`HTML`字符串, 被浏览器所渲染. 同时, 浏览器引用`Client`文件, 将纯静态的页面激活, 添加绑定事件等.  
+
+因此我们需要将项目结构调整下. 首先利用脚手架快速生成一个完善的`Vue`项目.
+```Shell
+vue init webpack ssr
+```
+而后调整下项目里的代码.  
+```js
+// main.js
+import Vue from 'vue'
+import App from './App'
+
+Vue.config.productionTip = false
+// 导出工厂方法, 保证每次请求链接时 产生一个全新的实例
+export function createApp () {
+  const app = new Vue({
+    render: h => h(App)
+  })
+  return { app }
+}
+
+// entry-server.js
+import { createApp } from './main'
+
+export default context => {
+  const { app } = createApp()
+  return app
+}
+
+// entry-client.js
+import { createApp } from './main'
+
+const { app } = createApp()
+app.$mount('#app')
+
+```
+
+将对应的入口文件配置完之后, 还需要调整`webpack`配置, 分别处理服务端, 和客户端.
+```js
+  // webpack.server.conf.js
+  const merge = require('webpack-merge')
+  const nodeExternals = require('webpack-node-externals')
+  const baseConfig = require('./webpack.base.conf.js')
+  const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
+  const path = require('path')
+
+  module.exports = merge(baseConfig, {
+    entry: path.resolve(__dirname, '../src/entry-server.js'),
+    target: 'node',
+    devtool: 'source-map',
+    output: {
+      libraryTarget: 'commonjs2'
+    },
+    externals: nodeExternals({
+      whitelist: /\.css$/
+    }),
+    plugins: [
+      // 生成对应的服务端
+      new VueSSRServerPlugin()
+    ]
+  })
+  // webpack.client.conf.js
+  const webpack = require('webpack')
+  const merge = require('webpack-merge')
+  const baseConfig = require('./webpack.base.conf.js')
+  const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+  const path = require('path')
+
+  module.exports = merge(baseConfig, {
+    entry: path.resolve(__dirname, '../src/entry-client.js'),
+    plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: "manifest",
+        minChunks: Infinity
+      }),
+      // 生成对应的 clickBundle
+      new VueSSRClientPlugin()
+    ]
+  })
+```
+而后继续处理下我们的入口文件
+```js
+  const Vue = require('vue')
+  const express = require('express')
+  const server = express()
+  const path = require('path')
+  const { createBundleRenderer } = require('vue-server-renderer')
+
+  const template = require('fs').readFileSync('./index.template.html', 'utf-8')
+  const serverBundle = require(path.resolve(__dirname, './ssr/dist/vue-ssr-server-bundle.json'))
+  const clientManifest = require(path.resolve(__dirname, './ssr/dist/vue-ssr-client-manifest.json'))
+  // 处理服务端和客户端.
+  const renderer = createBundleRenderer(serverBundle, {
+    template,
+    clientManifest
+  })
+  // 静态文件托管
+  server.use(express.static(path.resolve(__dirname, './ssr/dist')))
+  server.get('/', (req, res) => {
+    renderer.renderToString({}, (err, html) => {
+      if (err) {
+        res.status(500).end('Internal Server Error')
+        return
+      }
+      res.end(html)
+    })
+  })
+  server.listen(8080)
+```
+
+而后启动服务器, 从浏览器访问, 并有了静态文件, 同时也具有事件点击功能

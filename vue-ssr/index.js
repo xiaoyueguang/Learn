@@ -1,35 +1,26 @@
 const Vue = require('vue')
-const server = require('express')()
-const createRenderer = require('vue-server-renderer').createRenderer
+const express = require('express')
+const server = express()
+const path = require('path')
+const { createBundleRenderer } = require('vue-server-renderer')
 
-const renderer = createRenderer({
-  // 读取模板
-  template: require('fs').readFileSync('./index.template.html', 'utf-8')
+const template = require('fs').readFileSync('./index.template.html', 'utf-8')
+const serverBundle = require(path.resolve(__dirname, './ssr/dist/vue-ssr-server-bundle.json'))
+const clientManifest = require(path.resolve(__dirname, './ssr/dist/vue-ssr-client-manifest.json'))
+// 处理服务端和客户端.
+const renderer = createBundleRenderer(serverBundle, {
+  template,
+  clientManifest
 })
-
-server.get('*', (req, res) => {
-  const app = new Vue({
-    data () {
-      return {
-        url: req.hostname
-      }
-    },
-    template: `
-      <div>
-        <span>Hello SSR FROM <em>{{url}}</em>!</span>
-        <p><span v-for="i in 9" :key="i">{{i}}</span></p>
-      </div>
-    `
-  })
-
-  renderer.renderToString(app, (err, html) => {
+// 静态文件托管
+server.use(express.static(path.resolve(__dirname, './ssr/dist')))
+server.get('/', (req, res) => {
+  renderer.renderToString({}, (err, html) => {
     if (err) {
       res.status(500).end('Internal Server Error')
       return
     }
-    // 生成 html 后, 在这里结束响应并返回
     res.end(html)
   })
 })
-
 server.listen(8080)
