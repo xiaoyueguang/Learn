@@ -1,6 +1,6 @@
 <template lang='pug'>
   div 关于我们
-    a(href = '/') 返回首页
+    router-link(to = '/') 返回首页
 </template>
 
 <script>

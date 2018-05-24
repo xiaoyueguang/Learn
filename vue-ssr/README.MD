@@ -187,6 +187,57 @@ app.$mount('#app')
 而后启动服务器, 从浏览器访问, 并有了静态文件, 同时也具有事件点击功能
 
 ## 路由与代码分割
-`SPA`中, 路由负责整个项目里的所有页面, 自动根据`URL`来切换对应的组件. 而放到服务端中显示则略有不同.
+`SPA`中, 路由负责整个项目里的所有页面, 自动根据`URL`来切换对应的组件. 而放到服务端中显示则略有不同.  
+同 `vue`的实例, 每次请求的时候, `vue-router`, 也是同时使用一个全新的实例.  
+整体思路为以下:
+* 服务端: 根据请求的URL, 将`router`通过`push`方法, 跳转到对应的组件, 然后渲染生成页面
+* 客户端: 在`router`确保完成之后, 再将`vue`实例挂载到DOM中, 用以激活整个页面.
+```js
+// entry-server.js
+import { createApp } from './main'
+export default context => {
+  return new Promise((resolve, reject) => {
+    const { app, router } = createApp()
+    // 将路由push到对应的url
+    router.push({
+      path: context.url
+    })
+    router.onReady(() => {
+      // 查看当前URL是否有对应匹配的组件
+      const matchedComponents = router.getMatchedComponents()
+      if (matchedComponents.length === 0) {
+        return reject({ code: 404 })
+      }
+      resolve(app)
+    }, reject)
+  })
+}
+
+// entry-client.js
+import { createApp } from './main'
+const { app, router } = createApp()
+router.onReady(() => {
+  // 激活静态DOM
+  app.$mount('#app')
+})
+
+// main.js
+import Vue from 'vue'
+import App from './App'
+import createRouter from './router.js'
+Vue.config.productionTip = false
+export function createApp () {
+  const router = createRouter()
+  const app = new Vue({
+    router,
+    render: h => h(App)
+  })
+  // 确保每次请求都是一个全新的实例
+  return { app, router }
+}
+
+
+```
+
 
 ## 数据预取和状态

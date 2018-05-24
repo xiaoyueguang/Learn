@@ -4,9 +4,7 @@
       @click="alert",
       src = './assets/logo.png'
     )
-    div router-view start
     router-view
-    div router-view end
 </template>
 
 <script>
