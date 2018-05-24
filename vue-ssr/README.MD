@@ -193,50 +193,48 @@ app.$mount('#app')
 * 服务端: 根据请求的URL, 将`router`通过`push`方法, 跳转到对应的组件, 然后渲染生成页面
 * 客户端: 在`router`确保完成之后, 再将`vue`实例挂载到DOM中, 用以激活整个页面.
 ```js
-// entry-server.js
-import { createApp } from './main'
-export default context => {
-  return new Promise((resolve, reject) => {
-    const { app, router } = createApp()
-    // 将路由push到对应的url
-    router.push({
-      path: context.url
+  // entry-server.js
+  import { createApp } from './main'
+  export default context => {
+    return new Promise((resolve, reject) => {
+      const { app, router } = createApp()
+      // 将路由push到对应的url
+      router.push({
+        path: context.url
+      })
+      router.onReady(() => {
+        // 查看当前URL是否有对应匹配的组件
+        const matchedComponents = router.getMatchedComponents()
+        if (matchedComponents.length === 0) {
+          return reject({ code: 404 })
+        }
+        resolve(app)
+      }, reject)
     })
-    router.onReady(() => {
-      // 查看当前URL是否有对应匹配的组件
-      const matchedComponents = router.getMatchedComponents()
-      if (matchedComponents.length === 0) {
-        return reject({ code: 404 })
-      }
-      resolve(app)
-    }, reject)
+  }
+
+  // entry-client.js
+  import { createApp } from './main'
+  const { app, router } = createApp()
+  router.onReady(() => {
+    // 激活静态DOM
+    app.$mount('#app')
   })
-}
 
-// entry-client.js
-import { createApp } from './main'
-const { app, router } = createApp()
-router.onReady(() => {
-  // 激活静态DOM
-  app.$mount('#app')
-})
-
-// main.js
-import Vue from 'vue'
-import App from './App'
-import createRouter from './router.js'
-Vue.config.productionTip = false
-export function createApp () {
-  const router = createRouter()
-  const app = new Vue({
-    router,
-    render: h => h(App)
-  })
-  // 确保每次请求都是一个全新的实例
-  return { app, router }
-}
-
-
+  // main.js
+  import Vue from 'vue'
+  import App from './App'
+  import createRouter from './router.js'
+  Vue.config.productionTip = false
+  export function createApp () {
+    const router = createRouter()
+    const app = new Vue({
+      router,
+      render: h => h(App)
+    })
+    // 确保每次请求都是一个全新的实例
+    return { app, router }
+  }
 ```
 
 
