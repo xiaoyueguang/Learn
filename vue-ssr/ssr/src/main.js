@@ -3,14 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import createRouter from './router.js'
+import createStore from './store.js'
 
 Vue.config.productionTip = false
 // 导出工厂方法, 保证每次请求链接时 产生一个全新的实例
 export function createApp () {
   const router = createRouter()
+  const store = createStore()
+
   const app = new Vue({
     router,
+    store,
     render: h => h(App)
   })
-  return { app, router }
+  return { app, router, store }
 }

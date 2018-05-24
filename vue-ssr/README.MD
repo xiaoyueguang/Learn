@@ -238,6 +238,53 @@ app.$mount('#app')
 ```
 
 ## 数据预取和状态
-如果项目中有采用`vuex`做数据管理, 那么会出现一个新的问题: 服务端渲染时, 可能已经在`store`中存入新的数据. 而客户端用户全部资源下载完成后, `store`中数据会与服务端的不一致, 这会导致渲染会出错等. 所幸的是, `vuex`一开始就考虑到这个问题, 我们只需要将服务端的`store`数据导出来放到`window`下的某一变量, 再通过`store.replaceState`方法, 直接将服务端的数据替换到客户端的`store`中, 保证两端数据一致即可.
+如果项目中有采用`vuex`做数据管理, 那么会出现一个新的问题: 服务端渲染时, 可能已经在`store`中存入新的数据. 而客户端用户全部资源下载完成后, `store`中数据会与服务端的不一致, 这会导致渲染会出错等. 因此需要一种方式去将服务端的`store`更新到客户端
+
+服务端和客户端的思路依然是不一样:
+* 服务端: 组件中自定义方法, 获取数据, 在`router`准备完成时, 遍历所需要渲染的组件, 遍历执行组件中自定义的方法, 来更新`store`, 同时将更新后的`store`数据导出, 插入到模板中
+* 客户端: 将模板中的数据取过来, 更新到自己的`store`中, 路由跳转前先执行自定义的方法, 来触发更新`store`, 更新完成后再执行`mount`
+
+```js
+// entry-server.js
+ await Promise.all(matchedComponents.map(Component => {
+  if (Component.asyncData) {
+    return Component.asyncData({
+      store,
+      route: router.currentRoute
+    })
+  }
+}))
+// 将 state 注入到模板中
+context.state = store.state
+
+// entry-client.js
+Vue.mixin({
+  beforeMount () {
+    const { asyncData } = this.$options
+    if (asyncData) {
+      // 如果有自定义方法, 则更新数据
+      this.dataPromise = asyncData({
+        store: this.$store,
+        route: this.$route
+      })
+    }
+  }
+})
+// 将模板上的数据取过来更新到store中
+if (window.__INITIAL_STATE__) {
+  store.replaceState(window.__INITIAL_STATE__)
+}
+
+// 组件中
+{
+  asyncData ({ store, route }) {
+    // 更新数据. 这里是取不到this的.
+    return store.state.items.length > 0
+      ? Promise.resolve()
+      : store.dispatch('fetchItem')
+  }
+}
+
+```
 
 
