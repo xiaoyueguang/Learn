@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SCENEJS</title>
+</head>
+<body>
+  <div class="test"></div>
+  <div class="test2"></div>
+</body>
+
+<script src="/node_modules/scenejs/dist/scene.min.js"></script>
+
+<script>
+const scene = new Scene({
+  ".test": {
+    0: "left: 0px; top: 0px; width: 100px; height: 100px; background: red; transform: translate(0px);",
+    1: {
+      "left": "100px",
+      "top": "0px",
+      "width": "200px",
+      transform: "translate(50px)",
+    },
+    2: {
+      "left": "200px",
+      "top": "100px",
+      width: '100px',
+      height: '200px',
+      transform: {
+        translate: "100px",
+      },
+    }
+  },
+  ".test2": {
+    0: "left: 0px; top: 0px; width: 100px; height: 100px; background: black; transform: translate(0px);",
+    1: {
+      "left": "200px",
+      "top": "0px",
+      "width": "300px",
+      transform: "translate(50px)",
+    },
+    2: {
+      "left": "300px",
+      "top": "100px",
+      width: '100px',
+      height: '400px',
+      transform: {
+        translate: "100px",
+      },
+    }
+  }
+}, {
+  selector: true,
+  easing: "ease-in-out",
+}).play();
+</script>
+
+</html>
