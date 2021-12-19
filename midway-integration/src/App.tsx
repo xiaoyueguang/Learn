@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './App.css';
 import { fetchTodos, create, ITodo } from './apis/lambda';
 import TodoComponent from './Todo'
 
