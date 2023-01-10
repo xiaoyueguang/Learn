@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "whistle": "^1.5.14"
+    "whistle": "^2.9.40"
   }
 }
